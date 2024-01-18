@@ -1,4 +1,5 @@
  const express = require("express");
+ const cors = require("cors")
  require("dotenv").config();
  require("./config");
  const userRouter = require("./routers/userrouter");
@@ -6,6 +7,9 @@
 
  const app = express();
  app.use(express.json());
+
+
+ app.use(cors({origin:"*"}))
  app.use("/uploads",express.static("uploads"));
 
  app.use('/api/v1/user',userRouter);
