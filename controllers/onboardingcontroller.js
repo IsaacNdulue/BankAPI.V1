@@ -14,7 +14,7 @@ exports.signUp = async(req,res)=>{
     try {
         
         //fetch the users details
-        const {firstName,lastName,phoneNumber,email,password,confirmPassword,pin} = req.body;
+        const {firstName,lastName,phoneNumber,email,password,confirmPassword,sex,pin} = req.body;
         console.log(req.body)
     
 
@@ -45,6 +45,7 @@ exports.signUp = async(req,res)=>{
             email,
             accountNumber:phoneNumber.slice(1),
             password:hash,
+            sex,
             pin
         })
 
