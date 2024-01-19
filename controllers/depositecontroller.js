@@ -7,7 +7,7 @@ exports.createDeposite = async(req,res)=>{
         const {amount} = req.body;
 
         const user = await userModel.findById(id);
-        const credit = user.balance + amount;
+        const credit = user.balance += amount;
         user.balance = credit
 
         const desposite = await despositemodel.create({userId: id, amount});
