@@ -12,4 +12,3 @@ router.post("/utilis",authenticate, utilispay);
 router.get("/history",authenticate, history)
 
 module.exports = router
-
