@@ -98,6 +98,7 @@ exports.login = async(req,res)=>{
         //throw a response
         res.status(200).json({
             message: "successfully logged in",
+            data:userExist,
             token
         })
 
