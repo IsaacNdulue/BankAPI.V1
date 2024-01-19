@@ -2,6 +2,7 @@ const transfermodel =require("../models/transfermodel");
 const userModel = require("../models/onboardingmodel");
 const withdrawModel =require("../models/withdrawmodel");
 const utilismodel = require("../models/utilismodel");
+const betmodel = require("../models/betmodel")
 
 exports.makeTransfer = async(req,res)=>{
     try{
@@ -135,6 +136,44 @@ exports.utilispay = async(req,res)=>{
          
                     res.status(200).json({
                         message:"utility payment made",
+                        data:recieve
+                    })
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+}
+
+exports.betpayment = async(req,res)=>{
+    try{
+        const id = req.user.userId;
+        const {betNumber,amount,pin} = req.body;
+        const sender = await userModel.findById(id);
+                if(pin !== sender.pin){
+                    return res.status(400).json({
+                        messsage:"incorrect pin"
+                    })
+                }
+                
+                if(sender.balance < amount){
+                    return res.status(401).json({
+                        messsage:"insufffiency funds"
+                        
+                    })
+                }
+                const debit = sender.balance - amount ;
+                sender.balance = debit;
+                
+                const recieve = await betmodel.create({userId:id,senderName:sender.firstName,amount,betNumber});
+              
+                console.log(recieve)
+                    
+        
+                    await sender.save();
+         
+                    res.status(200).json({
+                        message:"bet payment made successfully",
                         data:recieve
                     })
     }catch(error){
