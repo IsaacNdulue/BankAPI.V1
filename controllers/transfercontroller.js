@@ -29,6 +29,8 @@ exports.makeTransfer = async(req,res)=>{
         }
         const debit = sender.balance -= amount ;
         sender.balance = debit;
+         
+        await sender.save()
         
         const credit = userExist.balance += amount;
         userExist.balance = credit
@@ -39,8 +41,10 @@ exports.makeTransfer = async(req,res)=>{
             amount,
             receiverName:userExist.firstName,
             senderName:sender.firstName,
+            balance:sender.balance,
             receiverId:userExist._id,
-            senderId:sender._id
+            senderId:sender._id,
+            balance:sender.balance
         });
         console.log(recieve)
             
@@ -50,7 +54,8 @@ exports.makeTransfer = async(req,res)=>{
  
             res.status(200).json({
                 message:"transfer successfully made",
-                data:recieve
+                data:{recieve,
+                balance:sender.balance}
             })
             
 
@@ -97,7 +102,7 @@ const sender = await userModel.findById(id);
                 data:{
                     amount: sender.amount,
                     balance: sender.balance,
-                    // firstName:sender.firstName
+                    firstName:sender.firstName
                     // sender
                 }
             })
