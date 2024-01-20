@@ -84,6 +84,7 @@ const sender = await userModel.findById(id);
         
         const recieve = await withdrawModel.create({userId:id,
             amount,
+            balance:sender.balance,
             senderName:sender.firstName
         });
         console.log(recieve)
@@ -93,7 +94,12 @@ const sender = await userModel.findById(id);
  
             res.status(200).json({
                 message:"withdraw successfully made",
-                data:recieve
+                data:{
+                    amount: sender.amount,
+                    balance: sender.balance,
+                    // firstName:sender.firstName
+                    // sender
+                }
             })
             
 
