@@ -147,7 +147,8 @@ exports.utilispay = async(req,res)=>{
          
                     res.status(200).json({
                         message:"utility payment made",
-                        data:recieve
+                        data:{recieve,
+                        balance: sender.balance}
                     })
     }catch(error){
         res.status(500).json({
