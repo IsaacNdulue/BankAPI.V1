@@ -10,7 +10,7 @@ router.post("/sign-up",uploader.single("profilePicture"),validation,signUp);
 router.post("/login",login);
 router.get("/get-all",getAll);
 router.put("/update/:id",authenticate,updateUser);
-router.post("/logout",logout);
+router.post("/logout",authenticate,logout);
 router.post("/deposit",authenticate,createDeposite);
 
 module.exports = router

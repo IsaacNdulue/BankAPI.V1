@@ -148,7 +148,7 @@ exports.logout = async(req,res)=>{
 
         // extract the token
         const token = hasAuthor.split(" ")[1]
-
+        
         //get the users id
         const id = req.user.userId
 
